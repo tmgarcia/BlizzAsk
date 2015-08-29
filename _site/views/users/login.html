@@ -1,0 +1,11 @@
+<div ng-hide="auth.authenticated">
+    <button ng-disabled="vm.preparingForAuth" ng-click="auth.authenticate()">Login with StackExchange Account</button>
+</div>
+<div ng-show="auth.authenticated">
+    <h2>You are already logged in. Would you like to log out?</h2>
+    <a ng-href="/users/logout">Logout here</a>
+</div>
+<div ng-show="vm.hasError">
+    <h2>{{vm.error.name}}</h2>
+    <p>{{vm.error.message}}</p>
+</div>

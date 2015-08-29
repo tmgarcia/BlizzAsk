@@ -1,0 +1,24 @@
+{
+  "globalstrict": true,
+  "globals": {
+      "angular": false,
+
+      "browser": false,
+      "element": false,
+      "by": false,
+
+      "describe": false,
+      "beforeEach": false,
+      "it": false,
+      "expect": false,
+      
+      "CacheFactory":false,
+      "Showdown":false,
+      
+      "jQuery":false,
+      
+      "SE":false,
+      
+      "$":false
+  }
+}

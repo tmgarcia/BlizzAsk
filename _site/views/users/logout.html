@@ -1,0 +1,7 @@
+<div ng-show="vm.auth.authenticated">
+    <button ng-click="auth.logout()">Logout</button>
+</div>
+<div ng-hide="vm.auth.authenticated">
+    <h2>You are not currently logged in. Would you like to log in?</h2>
+    <a ng-href="/users/login">Login here</a>
+</div>

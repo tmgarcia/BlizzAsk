@@ -1,0 +1,14 @@
+{
+    "fonts.fontSize": "12px",
+    "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",
+    "styleActiveLine": true,
+    "language": {
+        "javascript": {
+            "linting.prefer": ["JSHint"],
+            "linting.usePreferredOnly": true
+        }
+    },
+    "linting.collapsed": true,
+    "custom-region-fold.startRegionWord": "region",
+    "custom-region-fold.endRegionWord": "endregion" 
+}

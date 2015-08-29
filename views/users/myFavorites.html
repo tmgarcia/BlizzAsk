@@ -1,0 +1,53 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" ><a ng-href="/me" role="tab" data-toggle="tab" data-target="#">Profile</a></li>
+    <li role="presentation" ><a ng-href="/me/badges" role="tab" data-toggle="tab" data-target="#">Badges</a></li>
+    <li role="presentation" class="active"><a ng-href="/me/favorites" role="tab" data-toggle="tab" data-target="#">Favorites</a></li>
+    <li role="presentation" ><a ng-href="/me/answers" role="tab" data-toggle="tab" data-target="#">Answers</a></li>
+</ul>
+<div class="user-favorites">
+    <div class="tab-content">
+        <div ng-hide="vm.favorites">
+            <h1>No favorites</h1>
+        </div>
+        <div ng-show="vm.favorites">
+            <div ng-repeat="question in vm.favorites" class="row question-top">
+                <div class="question-stats col-md-3">
+                    <div class="vote-count col-md-3">
+                        <div>{{ question.stats.favoriteCount}}</div>
+                        <div>favorites</div>
+                    </div>
+                    <div class="vote-count col-md-3">
+                        <div>{{ question.stats.score}}</div>
+                        <div>votes</div>
+                    </div>
+                    <div class="answer-count col-md-3">
+                        <div>{{ question.stats.answerCount}}</div>
+                        <div>answers</div>
+                    </div>
+                    <div class="view-count col-md-3">
+                        <div>{{ question.stats.viewCount}}</div>
+                        <div>views</div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="question-title" >
+                        <a ng-href="/questions/{{question.id}}"><h3 ng-bind-html="question.title"></h3></a>
+                    </div>
+                    <div class="question-tags">
+                        <a ng-repeat="tag in question.tags" class="btn btn-default" ng-href="/tags/{{ tag }}/questions" role="button">{{ tag }}</a>
+                    </div>
+                    <div class="question-asked">
+                        <p>Asked <span>{{question.dates.creationDate | dateToDuration}}</span> by <a ng-href="/users/{Pquestion.owner.id}}">{{ question.owner.name }}</a> {{question.owner.reputation}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav ng-show="vm.pagingOptions">
+            <ul class="pagination">
+                <li ng-repeat="opt in vm.pagingOptions"  ng-class="opt.class"><a ng-href="/me/favorites?page={{opt.value}}&pageSize={{vm.pageSize}}">
+                    <span ng-bind-html="opt.display"></span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+
+<form action="/questions/search" method="GET">
+    Search: <input type="text" name="query"  ng-value="vm.query"><button class="btn btn-default" type="submit">Search</button>
+</form>
+<ul class="nav nav-tabs" role="tablist">
+    <li ng-repeat="sort in vm.sortOptions" role="presentation" ng-class="vm.getSortClass(sort.value)"><a ng-href="/questions/search?query={{vm.query}}&sort={{sort.value}}&page=1&pageSize={{vm.pageSize}}" role="tab" data-toggle="tab">{{sort.key}}</a></li>
+</ul>
+<ol>
+    <li ng-repeat="question in vm.questions">
+        <a ng-href="/questions/{{question.id}}"><h3 ng-bind-html="question.title"></h3></a>
+        <small>{{ question.id }}</small>
+        <span>{{ question.getBodyPreview(400) | htmlToPlaintext}}</span>
+        <p>Votes: <span>{{ question.score}} </span></p>
+        <p>Asked <span ng-bind-html="question.dates.creationDate"></span> by <span>{{ question.owner.name }}</span></p>
+    </li>
+</ol>
+<nav>
+    <ul class="pagination">
+        <li ng-repeat="opt in vm.pagingOptions"  ng-class="opt.class"><a ng-href="/questions/search?query={{vm.query}}&sort={{vm.sort}}&page={{opt.value}}&pageSize={{vm.pageSize}}">
+            <span ng-bind-html="opt.display"></span></a>
+        </li>
+    </ul>
+</nav>

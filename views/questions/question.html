@@ -1,0 +1,115 @@
+<div class="question-page">
+    <h2 ng-bind-html="vm.question.title" class="question-title"></h2>
+    <div class="row">
+        <div class="col-md-1 question-votes" ng-show="auth.getIsAuthenticated()">
+            <div ng-class="{active: vm.question.currentUser.upvoted}" class="question-vote-up">
+                <button type="button" class="btn btn-default" ng-click="vm.questionUpvoteClick()"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></button>
+            </div>
+            <div>{{ vm.question.stats.score }}</div>
+            <div ng-class="{active: vm.question.currentUser.downvoted}" class="question-vote-down">
+                <button type="button" class="btn btn-default" ng-click="vm.questionDownvoteClick()"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
+            </div>
+            <div ng-class="{active: vm.question.currentUser.favorited}" class="question-favorite">
+                <button type="button" class="btn btn-default" ng-click="vm.questionFavoriteClick()"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>
+            </div>
+        </div>
+        <div ng-class="{'col-md-11': auth.getIsAuthenticated(), 'col-md-12': !(auth.getIsAuthenticated())}" class="question-text">
+            <div ng-bind-html="vm.question.body" class="question-body"></div>
+            <div class="question-tags">
+                <a ng-repeat="tag in vm.question.tags" class="btn btn-default" ng-href="/tags/{{ tag }}/questions" role="button">{{ tag }}</a>
+            </div>
+            <div class="question-owner-area">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4 question-editor">
+                    <div ng-show="vm.question.dates.lastEditDate">
+                        <div class="date">edited {{ vm.question.dates.lastEditDate | dateToDuration }}</div>
+                        <div ng-show="vm.question.lastEditor">
+                            <div class="pull-left question-editor-image">
+                                <img ng-src="{{vm.question.lastEditor.profileImage}}" width="32" height="32">
+                            </div>
+                            <div class="pull-left">
+                                <div><a ng-href="/users/{{vm.question.lastEditor.id}}">{{ vm.question.lastEditor.name }}</a></div>
+                                <div class="question-editor-stats">
+                                    <span class="reputation">{{vm.question.lastEditor.stats.reputation}}</span><span ng-show="vm.question.lastEditor.stats.badgeCount"><span ng-show="vm.question.lastEditor.stats.badgeCount.bronze" class="badge badge-bronze">{{vm.question.lastEditor.stats.badgeCount.bronze}}</span><span ng-show="vm.question.lastEditor.stats.badgeCount.silver" class="badge badge-silver">{{vm.question.lastEditor.stats.badgeCount.silver}}</span><span ng-show="vm.question.lastEditor.stats.badgeCount.gold" class="badge badge-gold">{{vm.question.lastEditor.stats.badgeCount.gold}}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 question-owner">
+                    <div class="date">asked {{ vm.question.dates.creationDate | dateToDuration }}</div>
+                    <div class="pull-left owner-image">
+                        <img ng-src="{{vm.question.owner.profileImage}}" width="32" height="32">
+                    </div>
+                    <div class="pull-left">
+                        <div><a ng-href="/users/{{vm.question.owner.id}}">{{ vm.question.owner.name }}</a> <span>{{vm.question.owner.stats.reputation}}</span></div>
+                        <div class="question-owner-stats">
+                            <span class="reputation">{{vm.question.owner.stats.reputation}}</span><span ng-show="vm.question.owner.stats.badgeCount"><span ng-show="vm.question.owner.stats.badgeCount.bronze" class="badge badge-bronze">{{vm.question.owner.stats.badgeCount.bronze}}</span><span ng-show="vm.question.owner.stats.badgeCount.silver" class="badge badge-silver">{{vm.question.owner.stats.badgeCount.silver}}</span><span ng-show="vm.question.owner.stats.badgeCount.gold" class="badge badge-gold">{{vm.question.owner.stats.badgeCount.gold}}</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="vm.question.stats.commentCount>0" class="question-comments container-fluid">
+        <div class="question-comment col-md-12" ng-repeat="comment in vm.question.comments">
+            <div class="pull-left question-comment-score">{{ comment.score }}</div>
+            <div class="question-comment-text"><span ng-bind-html="comment.body"></span> - <a ng-href="/users/{{comment.owner.id}}">{{ comment.owner.name }}</a> {{comment.creationDate | dateToDuration}}</div>
+        </div>
+    </div>
+    <div ng-show="vm.question.stats.answerCount>0" class="container-fluid">
+        <h3>{{vm.question.stats.answerCount}} Answers</h3>
+        <div class="question-answers">
+            <div class="question-answer row" ng-repeat="answer in vm.question.answers">
+                <div class="col-md-1 answer-votes"  ng-show="auth.getIsAuthenticated()">
+                    <div ng-class="{active: answer.currentUser.upvoted}" class="answer-vote-up">
+                        <button type="button" class="btn btn-default" ng-click="vm.answerUpvoteClick(answer)"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></button>
+                    </div>
+                    <div>{{ answer.stats.score }}</div>
+                    <div ng-class="{active: answer.currentUser.downvoted}" class="answer-vote-down">
+                        <button type="button" class="btn btn-default" ng-click="vm.answerDownvoteClick(answer)"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+                <div ng-class="{'col-md-11': auth.getIsAuthenticated(), 'col-md-12': !(auth.getIsAuthenticated())}" class="answer-text">
+                    <div ng-bind-html="answer.body" class="answer-body"></div>
+                    <div class="answer-owner-area row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4 answer-editor">
+                            <div ng-show="answer.dates.lastEditDate">
+                                <div class="date">edited {{ answer.dates.lastEditDate | dateToDuration }}</div>
+                                <div ng-show="answer.lastEditor">
+                                    <div class="pull-left editor-image">
+                                        <img ng-src="{{answer.lastEditor.profileImage}}" width="32" height="32">
+                                    </div>
+                                    <div class="pull-left">
+                                        <div><a ng-href="/users/{{answer.lastEditor.id}}">{{ answer.lastEditor.name }}</a></div>
+                                        <div class="answer-editor-stats">
+                                            <span class="reputation">{{answer.lastEditor.stats.reputation}}</span><span ng-show="answer.lastEditor.stats.badgeCount"><span ng-show="answer.lastEditor.stats.badgeCount.bronze" class="badge badge-bronze">{{answer.lastEditor.stats.badgeCount.bronze}}</span><span ng-show="answer.lastEditor.stats.badgeCount.silver" class="badge badge-silver">{{answer.lastEditor.stats.badgeCount.silver}}</span><span ng-show="answer.lastEditor.stats.badgeCount.gold" class="badge badge-gold">{{answer.lastEditor.stats.badgeCount.gold}}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 answer-owner">
+                            <div class="date">answered {{ answer.dates.creationDate | dateToDuration }}</div>
+                            <div class="pull-left owner-image">
+                                <img ng-src="{{answer.owner.profileImage}}" width="32" height="32">
+                            </div>
+                            <div class="pull-left">
+                                <div><a ng-href="/users/{{answer.owner.id}}">{{ answer.owner.name }}</a></div>
+                                <div class="answer-owner-stats">
+                                    <span class="reputation">{{answer.owner.stats.reputation}}</span><span ng-show="answer.owner.stats.badgeCount"><span ng-show="answer.owner.stats.badgeCount.bronze" class="badge badge-bronze">{{answer.owner.stats.badgeCount.bronze}}</span><span ng-show="answer.owner.stats.badgeCount.silver" class="badge badge-silver">{{answer.owner.stats.badgeCount.silver}}</span><span ng-show="answer.owner.stats.badgeCount.gold" class="badge badge-gold">{{answer.owner.stats.badgeCount.gold}}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-hide="vm.question.stats.answerCount>0" class="container-fluid">
+        <h2>No answers</h2>
+    </div>
+</div>

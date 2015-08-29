@@ -1,0 +1,49 @@
+<div class="questions-search-bar">
+    <h3>Search Questions</h3>
+    <form action="/questions/search" method="GET" class="form-inline">
+        <div class="form-group">
+            <input type="text" name="query" class="form-control" ng-value="vm.query">
+            <button class="btn btn-default" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+
+<h3 class="nav-tabs-title">{{vm.totalQuestions}} Results</h3>
+<ul class="nav nav-tabs nav-tabs-right" role="tablist">
+    <li ng-repeat="sort in vm.sortOptions" role="presentation" ng-class="vm.getSortClass(sort.value)"><a ng-href="/questions/search?query={{vm.query}}&sort={{sort.value}}&page=1&pageSize={{vm.pageSize}}" role="tab" data-toggle="tab" data-target="#">{{sort.key}}</a></li>
+</ul>
+<div class="tab-content">
+    <div class="row question-search" ng-repeat="question in vm.questions">
+        <div class="question-stats col-md-1">
+            <div class="vote-count">
+                <div>{{ question.stats.score}}</div>
+                <div>votes</div>
+            </div>
+            <div class="answer-count">
+                <div>{{ question.stats.answerCount}}</div>
+                <div>answers</div>
+            </div>
+        </div>
+        <div class="col-md-11">
+            <div class="question-title" >
+                <a ng-href="/questions/{{question.id}}"><h3 ng-bind-html="question.title"></h3></a>
+            </div>
+            <div class="question-body-preview">
+                {{ question.getBodyPreview(400) | htmlToPlaintext}}
+            </div>
+            <div class="question-tags">
+                <a ng-repeat="tag in question.tags" class="btn btn-default" ng-href="/tags/{{ tag }}/questions" role="button">{{ tag }}</a>
+            </div>
+            <div class="question-asked">
+                <p>Asked <span>{{question.dates.creationDate | dateToDuration}}</span> by <a ng-href="/users/{Pquestion.owner.id}}">{{ question.owner.name }}</a> {{question.owner.reputation}}</p>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul class="pagination">
+            <li ng-repeat="opt in vm.pagingOptions"  ng-class="opt.class"><a ng-href="/questions/search?query={{vm.query}}&sort={{vm.sort}}&page={{opt.value}}&pageSize={{vm.pageSize}}">
+                <span ng-bind-html="opt.display"></span></a>
+            </li>
+        </ul>
+    </nav>
+</div>

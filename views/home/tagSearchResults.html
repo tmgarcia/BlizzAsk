@@ -1,0 +1,28 @@
+<div class="tags-search-bar">
+    <h3>Search Tags</h3>
+    <form action="/tags/search" method="GET" class="form-inline">
+        <div class="form-group">
+            <input type="text" name="query" class="form-control" ng-value="vm.query">
+            <button class="btn btn-default" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+
+<h3 class="nav-tabs-title">{{vm.totalTags}} Results</h3>
+<ul class="nav nav-tabs nav-tabs-right" role="tablist">
+    <li ng-repeat="sort in vm.sortOptions" role="presentation" ng-class="vm.getSortClass(sort.value)"><a ng-href="/tags/search?query={{vm.query}}&sort={{sort.value}}&page=1&pageSize={{vm.pageSize}}" role="tab" data-toggle="tab" data-target="#">{{sort.key}}</a></li>
+</ul>
+<div class="tab-content">
+    <div class="row tag-search">
+        <div class="col-md-3" ng-repeat="tag in vm.tags">
+            <a ng-href="/tags/{{tag.name}}/questions">{{tag.name }}</a> x {{ tag.count }}
+        </div>
+    </div>
+    <nav>
+        <ul class="pagination">
+            <li ng-repeat="opt in vm.pagingOptions"  ng-class="opt.class"><a ng-href="/tags/search?query={{vm.query}}&sort={{vm.sort}}&page={{opt.value}}&pageSize={{vm.pageSize}}">
+                <span ng-bind-html="opt.display"></span></a>
+            </li>
+        </ul>
+    </nav>
+</div>

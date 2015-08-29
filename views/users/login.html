@@ -1,0 +1,20 @@
+<div ng-hide="vm.completedAuth">
+    <div ng-hide="auth.getIsAuthenticated()" class="login">
+        <h1>Welcome!</h1>
+        <p>To sign in, please login with your StackExchange account</p>
+        <p><button class="btn btn-primary btn-lg" role="button" ng-click="vm.authClicked()">Login with StackExchange</button></p>
+    </div>
+    <div ng-show="auth.getIsAuthenticated()">
+        <h2>You are already logged in. Would you like to log out?</h2>
+        <a ng-href="/users/logout">Logout here</a>
+    </div>
+    <div ng-show="vm.hasError" class="alert alert-danger login-error">
+        <h2>Error</h2>
+        <h3 ng-binding="vm.error.name"></h3>
+        <p ng-binding="vm.error.message"></p>
+    </div>
+</div>
+<div ng-show="vm.completedAuth"  class="login-success">
+    <h2>Authentication successful!</h2>
+    <a href="/home">Back to home</a>
+</div>

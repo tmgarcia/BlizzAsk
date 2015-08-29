@@ -1,0 +1,11 @@
+<form action="/tags/search" method="GET">
+    Search Tags: <input type="text" name="query"><button class="btn btn-default" type="submit">Search</button>
+</form>
+<div>
+    <h2>Popular Tags</h2>
+    <div class="tag-cloud">
+        <div ng-repeat="tagDisplay in vm.tags | orderBy:'object.name'" ng-class="'cloud-weight-'+tagDisplay.weight" class="cloud-tag">
+            <a ng-href="/tags/{{tagDisplay.object.name}}/questions">{{tagDisplay.object.name}} ({{tagDisplay.object.count}})</a>
+        </div>
+    </div>
+</div>

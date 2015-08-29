@@ -1,0 +1,17 @@
+<div class="user-profile">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="/me" role="tab" data-toggle="tab" data-target="#">Profile</a></li>
+        <li role="presentation" ><a href="/me/badges" role="tab" data-toggle="tab" data-target="#">Badges</a></li>
+        <li role="presentation" ><a href="/me/favorites" role="tab" data-toggle="tab" data-target="#">Favorites</a></li>
+        <li role="presentation" ><a href="/me/answers" role="tab" data-toggle="tab" data-target="#">Answers</a></li>
+    </ul>
+    <div class="tab-content">
+        <img ng-src="{{vm.user.profileImage | trusted}}" class="profile-image">
+        <h1 class="profile-name" >{{ vm.user.name }}</h1>
+        <div class="profile-about" ng-show="vm.user.aboutMe">{{ vm.user.aboutMe }}</div>
+        <div class="profile-about" ng-hide="vm.user.aboutMe">No about me section</div>
+        <div class="profile-reputation" >{{ 'Reputation: ' + vm.user.stats.reputation }}</div>
+        <div class="profile-answer-count" >{{ 'Answers: ' + vm.user.stats.answerCount }}</div>
+        <div class="profile-question-count" >{{ 'Questions: ' + vm.user.stats.questionCount }}</div>
+    </div>
+</div>

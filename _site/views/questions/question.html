@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <h2 ng-bind-html="vm.question.title"></h2>
+    <p>Votes: <span ng-bind-html="vm.question.stats.score"></span></p>
+    <div ng-bind-html="vm.question.body"></div>
+    <div>
+        <p>{{ vm.question.dates.creationDate }}</p>
+        <a ng-href="/users/{{vm.question.owner.id}}"><b>{{ vm.question.owner.name }}</b></a>
+        <p>{{ vm.question.owner.stats.badgeCount.bronze }} {{ vm.question.owner.stats.badgeCount.silver }} {{ vm.question.owner.stats.badgeCount.gold }}</p>
+    </div>
+</div>
+<div ng-show="vm.question.stats.commentCount>0" class="container-fluid">
+    <ul>
+        <li ng-repeat="comment in vm.question.comments">
+            <p ng-bind-html="comment.body"></p>body owner score
+            <p>{{ comment.creationDate }} by {{ owner.name }}</p>
+        </li>
+    </ul>
+</div>
+<div ng-show="vm.question.stats.answerCount>0" class="container-fluid">
+<ul>
+    <li ng-repeat="answer in vm.question.answers">
+        <h3 ng-bind-html="answer.title"></h3>
+        <p ng-bind-html="answer.body"></p>
+    </li>
+</ul>
+</div>
+<div ng-hide="vm.question.stats.answerCount>0" class="container-fluid">
+    <h2>No answers</h2>
+</div>

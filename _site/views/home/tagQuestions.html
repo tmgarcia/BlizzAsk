@@ -1,0 +1,20 @@
+<form action="/tags/search" method="GET">
+    Search Tags: <input type="text" name="query"><button class="btn btn-default" type="submit">Search</button>
+</form>
+<h2>Frequently '{{ vm.tagName }}' Questions </h2>
+<ol>
+    <li ng-repeat="question in vm.questions">
+        <a ng-href="/questions/{{question.id}}"><h3 ng-bind-html="question.title"></h3></a>
+        <small>{{ question.id }}</small>
+        <span>{{ question.getBodyPreview(400) | htmlToPlaintext}}</span>
+        <p>Votes: <span>{{ question.score}} </span></p>
+        <p>Asked <span ng-bind-html="question.dates.creationDate"></span> by <span>{{ question.owner.name }}</span></p>
+    </li>
+</ol>
+<nav>
+    <ul class="pagination">
+        <li ng-repeat="opt in vm.pagingOptions"  ng-class="opt.class"><a ng-href="/tags/{{vm.tagName}}/questions?page={{opt.value}}&pageSize={{vm.pageSize}}">
+            <span ng-bind-html="opt.display"></span></a>
+        </li>
+    </ul>
+</nav>
